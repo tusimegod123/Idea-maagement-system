@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Registered Users</title>
+
+
+<style>
+body {
+	font-family: Arial;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+form.example input[type=text] {
+	padding: 10px;
+	font-size: 17px;
+	border: 1px solid grey;
+	float: left;
+	width: 80%;
+	background: #f1f1f1;
+}
+
+form.example button {
+	float: left;
+	width: 20%;
+	padding: 10px;
+	background: #2196F3;
+	color: white;
+	font-size: 17px;
+	border: 1px solid grey;
+	border-left: none;
+	cursor: pointer;
+}
+
+form.example button:hover {
+	background: #0b7dda;
+}
+
+form.example::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+</style>
+
+</head>
+<body>
+	<div th:replace="fragments/nav :: nav" />
+	<br>
+	<br>
+
+	<br>
+	<div class="container">
+		<br>
+
+		<!-- Button trigger modal -->
+		<!-- <button type="button" class="btn btn-primary" data-toggle="modal"
+			data-target="#exampleModal" data-whatever="@mdo">Add New
+			Idea</button>
+
+		Modal
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">New Idea</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="/ideas" method="post">
+							<h1 style="text-align: center;">Bring your idea to life</h1>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Idea
+									Title:</label> <input type="text" class="form-control"
+									id="recipient-name">
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label">Idea
+									Description:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="message-text" class="col-form-label">Description:</label>
+								<textarea class="form-control" id="message-text"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Attach
+									File:</label> <input type="file"class="form-control-file"
+									id="exampleFormControlFile1">
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Date
+									Of Submission:</label> <input type="date" class="form-control"
+									id="recipient-name">
+							</div>
+							<div class="form-group">
+								<label for="recipient-name" class="col-form-label">Idea
+									Category:</label> <select class="form-control"
+									id="exampleFormControlSelect1">
+									<option>Information And Technology</option>
+									<option>Social</option>
+									<option>Business</option>
+									<option>Education</option>
+									<option>Economical</option>
+								</select>
+							</div>
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div> -->
+
+		<!--  <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form> -->
+		<br> <br>
+		<form class="form-inline" th:action="@{/search}" method="GET">
+			<input class="form-control mr-sm-2" type="search"
+				placeholder="Search with key word.." aria-label="Search"
+				name="keyword">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+		<br>
+
+		<h2>List of Registered Users!</h2>
+
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th scope="col">Full Name</th>
+					<th scope="col">Country</th>
+					<th scope="col">Gender</th>
+					<th scope="col">Role</th>
+					<th colspan="2" style="text-align: center;">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${users}">
+					<td th:text="${user.userName}"></td>
+					<td th:text="${user.country}"></td>
+					<td th:text="${user.genderId}"></td>
+					<td th:text="${user.primaryPhone}"></td>
+					<td><a th:href="@{/editt/{id}(id=${user.globalUserId})}"
+						class="btn btn-secondary">Edit</a> <!-- <a th:href="@{editIdea}" class="btn btn-secondary">Edit</a>  -->
+					</td>
+					<td><a th:href="@{/delete/{id}(id=${user.globalUserId})}"
+						class="btn btn-danger">Delete</a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<!-- <div th:if="${totalPages > 1}">
+			<div class="row col-sm-10">
+				<div class="col-sm-3">Total Ideas Submitted: [[${totalItems}]]</div>
+
+				<div class="col">
+					<span th:each="i: ${#numbers.sequence(1,totalPages)}"> <a
+						th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+						<span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp;
+					</span>
+				</div>
+
+				<div class="col">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/page/' + ${currentPage + 1}}">Next</a> <span
+						th:unless="${currentPage < totalPages}">Next</span> </span>
+				</div>
+
+				<div class="col">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/page/' + ${totalPages}}">Last</a> <span
+						th:unless="${currentPage< totalPages}">Last</span>Last </span>
+				</div>
+			</div>
+
+		</div> -->
+
+
+	</div>
+
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

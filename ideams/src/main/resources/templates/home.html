@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	crossorigin="anonymous"></script>
+	<title>Home</title>
+</head>
+
+<body style="background-color: #f8f8ff;">
+	<div th:replace="fragments/nav :: nav"></div>
+	<br>
+	<br>
+	<br>
+	<div class="container">
+		<!-- <div class="row">
+			<div class="col"> -->
+				<form th:action="@{/ideas}" method="post" enctype="multipart/form-data" 
+					th:object="${idea}"
+					style="background-color: #F5F5F5; margin-top: 20px; border: 1px solid #f2f2f2; padding: 10px; border-radius: 4px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+					<h1 style="text-align: center;">Bring your idea to life</h1>
+					<div class="form-row">
+						<div class="col">
+							<label class="form-label">Idea Title</label> <input type="text" class="form-control"
+								placeholder="Idea Title" name="ideaTitle">
+						</div>
+						<div class="col">
+							<label class="form-label">Idea Description</label>
+							<textarea type="text" class="form-control" rows="3" name="ideaDescription"
+								placeholder="Description"></textarea>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col">
+							<label for="formFile" class="form-label">Attach File</label> <input class="form-control"
+								type="file" name="content" id="formFile">
+						</div>
+						<div class="col">
+							<label class="form-label">Date Of Submission</label> <input type="date" class="form-control"
+								name="dateOfSubmission" id="inputAddress1">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col">
+							<label class="form-label">Idea Category</label> <select th:field="*{category_id}"
+								class="form-control" id="exampleFormControlSelect1">
+								<option th:each="category : ${ideacategory}" th:value="${category.category_id}"
+									th:text="${category.category_name}"></option>
+							</select>
+						</div>
+					</div><br>
+					<div class="form-row">
+					<div class="col">
+						<button type="submit" class="btn btn-primary">Submit</button>
+						<br>
+					</div>
+					</div>
+				</form>
+
+			
+				
+				<br>
+			<!-- </div>
+
+		</div> -->
+	</div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+	crossorigin="anonymous"></script>
+
+</html>

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-IdeamsApplication<ideams>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "com.flhub.ideams.IdeamsApplication",
+            "projectName": "ideams",
+            "args": ""
+        }
+    ]
+}

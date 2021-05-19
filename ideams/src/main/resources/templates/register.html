@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+
+<title>Register</title>
+</head>
+<body style="background-color: #f8f8ff;">
+	<div th:replace="fragments/nav :: nav"></div>
+	<br>
+	<br>
+	<br>
+
+	<div class="container">
+
+		<form th:action="@{/save}" method="post" th:object="${user}"
+			class="row g-3"
+			style="background-color: #F5F5F5; margin-top: 20px; border: 1px solid #f2f2f2; border-radius: 4px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+
+
+			<div class="form-group col-md-12">
+				<h1 style="text-align: center;">Please Register</h1>
+				<P style="text-align: center;">Already Registered? <a href="/login">Login</a></P>
+			</div>
+
+			<div class="form-group col-md-4">
+				<label for="inputEmail4">First Name</label> <input type="text"
+					class="form-control" placeholder="Last Name"
+					th:field="*{firstName}">
+			</div>
+			<div class="form-group col-md-4">
+				<label for="inputEmail4">Middle Name</label> <input type="text"
+					class="form-control" placeholder="Middle Name" name="middleName">
+			</div>
+			<div class="form-group col-md-4">
+				<label for="inputPassword4">Last Name</label> <input type="text"
+					class="form-control" placeholder="last Name" name="lastName">
+			</div>
+
+			<div class="col-6">
+				<div class="form-group">
+					<label for="exampleFormControlSelect1">Gender</label> <select
+						th:field="*{genderId}" class="form-control"
+						id="exampleFormControlSelect1">
+						<!-- <option th:value="" selected>Choose...</option> -->
+						<option th:each="gender : ${onesgender}"
+							th:value="${gender.genderId}" th:text="${gender.genderName}">Select</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-6">
+				<label for="inputAddress2" class="form-label">Date Of Birth</label>
+				<input type="date" class="form-control" id="dateOfBirth"
+					th:field="*{dateOfBirth}">
+			</div>
+			<div class="col-md-6">
+				<label class="form-label">National Id Number(NIN)</label> <input
+					type="text" class="form-control" placeholder="e.g FDGHDI2IDH3H"
+					name="nin">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress" class="form-label">Primary Phone
+					No.</label> <input type="text" class="form-control"
+					placeholder="eg 0789887688" name="primaryPhone">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress2" class="form-label">Secondary
+					Phone No.</label> <input type="text" class="form-control"
+					id="inputAddress2" placeholder="eg 0789887688"
+					name="secondaryPhone">
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label for="exampleFormControlSelect1">Country</label> <select
+						th:field="*{country}" class="form-control"
+						id="exampleFormControlSelect1">
+						<!-- 	<option selected>Choose...</option> -->
+						<option th:each="country : ${onescountry}"
+							th:value="${country.countryId}" th:text="${country.countryName}"></option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<label for="inputZip" class="form-label">Zip Code</label> <input
+					type="text" class="form-control" id="inputZip" name="zipCode">
+			</div>
+			<div class="col-12"></div>
+			<div class="col-6">
+				<label for="inputAddress" class="form-label">Primary Email</label> <input
+					type="email" class="form-control" id="inputAddress"
+					placeholder="example@gmail.com" name="primaryEmail">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress2" class="form-label">Secondary
+					Email</label> <input type="email" class="form-control" id="inputAddress5"
+					placeholder="example@gmail.com">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress" class="form-label">Preferred
+					WhatsApp No.</label> <input type="text" class="form-control"
+					id="inputAddres" placeholder="Prefered WhatsApp No"
+					name="preferedWhatsappNumber">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress2" class="form-label">Card Or
+					passport Number</label> <input type="text" class="form-control"
+					id="inputAddress" placeholder="e.g FDGHDI2IDH3H" name="cardNumber">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress" class="form-label">Address</label> <input
+					type="text" class="form-control" id="inputAddres"
+					placeholder="1234 Main St" name="address">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress2" class="form-label">Address 2</label> <input
+					type="text" class="form-control" id="inputAddress"
+					placeholder="Apartment, studio, or floor">
+			</div>
+			<div class="form-group col-md-12">
+				<h6 style="color: red">Important: You will use the Details
+					below to Login</h6>
+			</div>
+
+			<div class="col-md-4">
+				<label for="inputPassword4" class="form-label">Please Set
+					Your User Name <span style="color: red">Required*</span>
+				</label> <input type="text" class="form-control" placeholder="User Name"
+					name="username" required>
+			</div>
+			<div class="col-md-4">
+				<label for="inputPassword4" class="form-label">Please Set
+					Your Password <span style="color: red">Required*</span>
+				</label> <input type="password" class="form-control" id="inputPassword4"
+					name="password" required>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<!-- <label for="exampleFormControlSelect1">Role</label> 
+					<input name="roles" th:each="role:${onesrole}" type="checkbox" value="${role.roleId}" th:text="${role.roleName}"> -->
+					<div class="form-check">
+						<label>Roles:</label>&nbsp; <input type="checkbox" name="roles"
+						th:each="role : ${allRoles}" th:text="${role.name}" 
+						th:value="${role.id}" th:field="*{roles}" style="margin:6px;" />
+					</div>
+					<label>Enabled:</label> <input type="checkbox" name="enabled" />
+				</div>
+			</div>
+			<div class="col-12">
+				<button type="submit" class="btn btn-primary">Register</button>
+				<br>
+			</div>
+		</form>
+		<br>
+	</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+	crossorigin="anonymous"></script>
+</html>

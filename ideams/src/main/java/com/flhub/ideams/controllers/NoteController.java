@@ -46,18 +46,18 @@ public class NoteController {
    IdeaRepository ideaRepository;
 
    @GetMapping(value = "/notes")
-   public String getNotes(){
-   return "notes";
+   public String getNotes() {
+      return "notes";
    }
 
    @PostMapping("/addnote")
-   private String saveNote( Note note, Idea idea) {
+   private String saveNote(Note note, Idea idea) {
       // Idea idea = ideaRepository.findById(ideaService.getIdeaById(idea));
       // Idea entity = ideaService.getIdeaById(ideaId.get());
       // note.setIdeaId(idea.getIdeaId());
       noteService.save(note);
       // System.out.println(idea.getIdeaId());
-      return "redirect:/comment/{ideaId}";
+      return "notes";
 
    }
 
@@ -80,7 +80,7 @@ public class NoteController {
          // model.addAttribute("ideacategory", category);
          model.addAttribute("note", new Note());
       } else {
-       //  model.addAttribute("totalcomments", note);
+         // model.addAttribute("totalcomments", note);
          model.addAttribute("idea", new Idea());
          model.addAttribute("ideacategory", new Idea());
 

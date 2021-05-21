@@ -162,4 +162,8 @@ public class IdeaService implements Ideas {
 	       
 	       return ideas;
 	}
+
+    public List<Idea> findAll() {
+        return null;
+    }
 }

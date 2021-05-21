@@ -53,6 +53,9 @@ const Page500 = () => import('@/views/pages/Page500')
 const Login = () => import('@/views/pages/Login')
 const Register = () => import('@/views/pages/Register')
 
+const Home = () => import('@/views/pages/Home')
+
+
 // Users
 const Users = () => import('@/views/users/Users')
 const User = () => import('@/views/users/User')
@@ -319,6 +322,12 @@ function configRoutes () {
           path: '404',
           name: 'Page404',
           component: Page404
+        },
+        // Custome Page created to talk to the backend
+        {
+          path: 'view',
+          name: 'HomeView',
+          component: Home
         },
         {
           path: '500',

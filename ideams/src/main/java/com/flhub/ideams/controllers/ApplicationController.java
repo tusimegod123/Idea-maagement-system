@@ -1,33 +1,22 @@
 package com.flhub.ideams.controllers;
 
-import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.CrossOrigin;
+//import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+
+@RestController
+@RequestMapping
 public class ApplicationController {
-	
-    @GetMapping("/")
-	public String indexPage(){
-		return "index";
-	}
 
-	@GetMapping("/login")
-	public String homePage() {
-		return "login";
-	}
-	
-	@GetMapping("/welcome")
-	public String WelcomePage() {
-		return "welcome";
-	}
-	
-	@GetMapping("/userhome")
-	public String userHomePage() {
-		return "userhome";
-
-	}
-	
-	
+    @GetMapping("api/messages/hello")
+    public String hello() {
+        return "Full Stack Java with Spring Boot & VueJS fullstack!";
+    }
 
 }
+
+

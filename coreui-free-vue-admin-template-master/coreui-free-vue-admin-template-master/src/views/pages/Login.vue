@@ -53,6 +53,7 @@
               </CCardBody>
             </CCard>
           </CCardGroup>
+          <HomeView />
         </CCol>
       </CRow>
     </CContainer>
@@ -60,6 +61,7 @@
 </template>
 
 <script>
+import HomeView from './Home';
 export default {
   name: 'Login'
 }

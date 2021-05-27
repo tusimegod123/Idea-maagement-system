@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
  
@@ -117,7 +118,7 @@ public class User extends Auditable<String> {
 		this.country = country;
 		this.modifiedReason = modifiedReason;
 		this.roles = roles;
-		this.ideas = ideas;
+		//this.ideas = ideas;
 	}
 
 	@Column
@@ -135,10 +136,9 @@ public class User extends Auditable<String> {
     private Set<Role> roles = new HashSet<>();
  
 	
-	
-	@OneToMany (mappedBy = "user")
-	
-	private Set<Idea> ideas;
+	// @JsonIgnore
+	// @OneToMany (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "user")
+	// private Set<Idea> ideas;
 
 	public String getFirstName() {
 		return firstName;
@@ -300,13 +300,13 @@ public class User extends Auditable<String> {
 		this.modifiedReason = modifiedReason;
 	}
 
-	public Set<Idea> getIdeas() {
-		return ideas;
-	}
+	// public Set<Idea> getIdeas() {
+	// 	return ideas;
+	// }
 
-	public void setIdeas(Set<Idea> ideas) {
-		this.ideas = ideas;
-	}
+	// public void setIdeas(Set<Idea> ideas) {
+	// 	this.ideas = ideas;
+	// }
 
     public void setId(Long id) {
 		this.id = id;

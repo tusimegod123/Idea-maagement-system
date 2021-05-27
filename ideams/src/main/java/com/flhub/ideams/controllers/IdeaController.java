@@ -4,9 +4,10 @@ import com.flhub.ideams.Exceptions.RecordNotFoundException;
 import com.flhub.ideams.Repository.UserRepository;
 import com.flhub.ideams.Services.CategoryService;
 import com.flhub.ideams.Services.IdeaService;
-
+import com.flhub.ideams.Services.UserService;
 import com.flhub.ideams.models.Category;
 import com.flhub.ideams.models.Idea;
+import com.flhub.ideams.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -32,10 +34,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
-@CrossOrigin("*")
-//@]RestController
-//@RequestMapping("/api")
+@RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = { "http://localhost:3001" })
+// @]RestController
+// @RequestMapping("/api")
 // @RequestMapping
 public class IdeaController {
 
@@ -48,11 +51,31 @@ public class IdeaController {
 	@Autowired
 	CategoryService categoryService;
 
-	// creating a get mapping that retrieves all the ideas detail from the database
-	// @GetMapping("/ideas")
-	// private List<Idea> getAllIdeas() {
+	@Autowired
+    private UserService service;
 
-	// 	return ideaService.getAllIdeas();
+	// creating a get mapping that retrieves all the ideas detail from the database
+	@GetMapping("/ideas")
+	private List<Idea> getAllIdeas() {
+
+		return ideaService.getAllIdeas();
+	}
+
+	@PostMapping(path = "/ideas")
+	public Idea createIdea(@RequestBody Idea idea)
+		{
+			return ideaService.save(idea);
+		}
+
+		// @GetMapping("/users")
+		// public Iterable<User> viewUserPage () {
+		// 	return service.findAll();
+		// }
+	
+
+	// @GetMapping("api/messages/hello")
+	// public String hello(){
+	// return "This mesage is from the back end";
 	// }
 
 	// creating a get mapping that retrieves the detail of a specific user
@@ -95,18 +118,18 @@ public class IdeaController {
 
 	// creating post mapping that post the user details in the database at /ideas
 	// route(in the form)
-	@PostMapping(value = "/ideas")
-	private String saveIdea(@ModelAttribute Idea idea, @RequestParam("content") MultipartFile file,
-			Authentication authentication) throws IllegalStateException, IOException {
-		String filePath = "C:\\Users\\a241904\\Documents\\workspace\\demoApp\\src\\main\\resources\\static\\assets\\uploads\\";
-		file.transferTo(new File(filePath + "myFile.jpg"));
-		// User user = new User();
+	// @PostMapping(value = "/ideas")
+	// private String saveIdea(@ModelAttribute Idea idea, @RequestParam("content") MultipartFile file,
+	// 		Authentication authentication) throws IllegalStateException, IOException {
+	// 	String filePath = "C:\\Users\\a241904\\Documents\\workspace\\demoApp\\src\\main\\resources\\static\\assets\\uploads\\";
+	// 	file.transferTo(new File(filePath + "myFile.jpg"));
+	// 	// User user = new User();
 
-		ideaService.save(idea, authentication);
+	// 	ideaService.save(idea, authentication);
 
-		// System.out.println(user);
-		return "redirect:/seeideas";
-	}
+	// 	// System.out.println(user);
+	// 	return "redirect:/seeideas";
+	// }
 
 	@GetMapping("/home")
 	public String home(Model model) {
@@ -120,14 +143,14 @@ public class IdeaController {
 		return "home";
 	}
 
-	@PostMapping("/createIdea")
-	public String saveOrUpdate(Idea idea, Authentication authentication, Model model) {
-		System.out.println("saveOrUpdate ");
+	// @PostMapping("/createIdea")
+	// public String saveOrUpdate(Idea idea, Authentication authentication, Model model) {
+	// 	System.out.println("saveOrUpdate ");
 
-		ideaService.saveOrUpdate(idea, authentication, model);
+	// 	ideaService.saveOrUpdate(idea);
 
-		return "redirect:/seeideas";
-	}
+	// 	return "redirect:/seeideas";
+	// }
 
 	@GetMapping("/search")
 	public String search(@Param("keyword") String keyword, Model model) {
@@ -150,14 +173,6 @@ public class IdeaController {
 	// // 1 is the default pageNo
 	// // return "ideas";
 	// }
-
-
-
-	@GetMapping("/ideas")
-	public String hello(){
-		return "This mesage is from the back end";
-	}
-
 
 	@GetMapping("/page/{pageNo}")
 	public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {

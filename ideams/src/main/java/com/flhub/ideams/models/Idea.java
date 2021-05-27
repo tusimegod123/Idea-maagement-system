@@ -21,10 +21,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @DynamicUpdate
-@EntityListeners(AuditingEntityListener.class)
+//@EntityListeners(AuditingEntityListener.class)
 @Table(name = "ideaTable")
 public class Idea extends Auditable<String> {
 	@Id
@@ -33,12 +35,14 @@ public class Idea extends Auditable<String> {
 	@Column(updatable = false)
 	private String ideaId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", insertable = false, updatable = false)
-	private User user;
+	// @JsonIgnore
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "user_id", insertable = false, updatable = false)
+	// private User user;
 
-	private Long user_id;
+	// private Long user_id;
 
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id", insertable = false, updatable = false)
 	private Category category;
@@ -129,8 +133,8 @@ public class Idea extends Auditable<String> {
 			String document, Long size) {
 		super();
 		this.ideaId = ideaId;
-		this.user = user;
-		this.user_id = user_id;
+		// this.user = user;
+		// this.user_id = user_id;
 		this.category = category;
 		this.category_id = category_id;
 //		this.createdDate = createdDate;
@@ -289,21 +293,21 @@ public class Idea extends Auditable<String> {
 		this.ideaBackgroundDescription = ideaBackgroundDescription;
 	}
 
-	public User getUser() {
-		return user;
-	}
+	// public User getUser() {
+	// 	return user;
+	// }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+	// public void setUser(User user) {
+	// 	this.user = user;
+	// }
 
-	public Long getUser_id() {
-		return user_id;
-	}
+	// public Long getUser_id() {
+	// 	return user_id;
+	// }
 
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
+	// public void setUser_id(Long user_id) {
+	// 	this.user_id = user_id;
+	// }
 
 	public Integer getCategory_id() {
 		return category_id;

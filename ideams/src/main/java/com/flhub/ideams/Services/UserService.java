@@ -21,10 +21,8 @@ public class UserService {
 	// 	return userRepository.save(entity);
 	// }
 
-	public void save(User user) {
-		//Role userRole =roleRepository.findByRole("USER");
-		//user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-		userRepository.save(user);
+	public User save(User user) {
+		return userRepository.save(user);
 	}
 
 	public <S extends User> Iterable<S> saveAll(Iterable<S> entities) {

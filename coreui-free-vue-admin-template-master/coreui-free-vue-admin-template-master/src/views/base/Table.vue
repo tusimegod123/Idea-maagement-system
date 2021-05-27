@@ -36,8 +36,9 @@ export default {
     fields: {
       type: Array,
       default () {
-        return ['username', 'registered', 'role', 'status']
-      }
+         return ['username', 'registered', 'role', 'status']
+        //return ['ideaTitle','ideaDescription','createdBy', 'lastModifiedBy','createdDate','notes']
+      },
     },
     caption: {
       type: String,

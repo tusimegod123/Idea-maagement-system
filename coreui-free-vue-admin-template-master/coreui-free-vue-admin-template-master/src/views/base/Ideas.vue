@@ -1,22 +1,9 @@
 <template>
   <div>
-    <p>welcome</p>
-    <!-- <h2>{{ msg }}</h2> -->
-    <!-- <ul>
-      <li v-for="idea in ideas" v-bind:key="idea.ideaId">{{ ideas }}</li>
-    </ul> -->
-    <!-- <table>
-      <th>
-        <td>Title</td>
-        <td>Description</td>
-      </th>
-       <tr  v-for="idea in ideas" v-bind:key="idea.id">
-        <td>{{idea.ideaTitle}}</td>
-        <td>Description</td>
-      </tr>
-    </table> -->
+   
 
-   <CTableWrapper :items="items">
+   <CTableWrapper :items="items" :fields="fields" >
+    
           <template #header>
             <CIcon name="cil-grid"/> Ideas Table
             <div class="card-header-actions">
@@ -35,13 +22,14 @@
 </template>
 
 <script>
-import CTableWrapper from '../../views/base/Table.vue';
+import CTableWrapper from './Table.vue';
 //import ApplicationDatService from '../../services/ApplicationDataService';
 import Vue from "vue";
 
 //import axios from "axios";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import { cilLink } from '@coreui/icons';
 Vue.use(VueAxios, axios);
 
 // const ideas = () =>{
@@ -62,19 +50,35 @@ const fields = [
 const items = [];
 
 export default {
-  name: "HomeView",
+  name: "IdeaView",
   components:{CTableWrapper},
   data() {
     return { 
       items,
-      fields
+      fields:['ideaTitle','ideaDescription','createdBy', 'lastModifiedBy','createdDate','notes']
       }
+  },
+  methods:{
+   fetchIdeas(allIdeas){
+     this.items = allIdeas.map(item =>{
+       return {
+         ideaTitle: item.ideaTitle,
+         description: item.ideaDescription,
+         createdBy: item.createdBy,
+         lastModifiedBy: item.lastModifiedBy,
+         createdDate: item.createdDate,
+         note: item.notes.map(note => note.comment)
+
+
+       }
+     })
+   }
   },
   mounted() {
     Vue.axios.get("http://localhost:4000/api/ideas")
     .then((response) => {
-     this.items = response.data;
-      console.warn(response.data);
+     this.fetchIdeas(response.data) 
+      console.warn(this.items);
     });
   },
   // computed: {

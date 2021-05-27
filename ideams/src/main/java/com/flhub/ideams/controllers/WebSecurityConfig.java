@@ -17,7 +17,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-import com.flhub.ideams.Services.UserDetailsServiceImpl;
+//import com.flhub.ideams.Services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -26,10 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomLoginSuccessHandler successHandler;
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
-    }
+    // @Bean
+    // public UserDetailsService userDetailsService() {
+    //     return new UserDetailsServiceImpl();
+    // }
 
     // @Bean
     // public BCryptPasswordEncoder passwordEncoder() {
@@ -61,13 +61,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/messages/hello/**","/register", "/save", "/login", "/welcome", "/", "/addnote", "/notes").permitAll()
+       // http.authorizeRequests()
+        http.authorizeRequests().antMatchers("/**").permitAll()
+                .antMatchers("/api/ideas**","/api/users**","/register", "/save", "/login", "/welcome", "/", "/addnote", "/notes").permitAll()
                 .antMatchers("/users", "/search", "searchresult").permitAll()
                 .antMatchers("/", "/resources/**", "/css/**", "/fonts**", "/img/**", "/js/**", "/assets/**").permitAll()
                 .antMatchers("/home", "/addgender", "/gender", "/genders", "/addcountry", "/addrole", "/welcome","/userss").permitAll()
                 .antMatchers("/register", "/userhome").permitAll()
-                .antMatchers("/user/{globalUserId}", "/createuser**").permitAll()
+                .antMatchers("/user/{globalUserId}", "/createuser**","/api/ideas/submit").permitAll()
                 .antMatchers("/idea", "/createIdea**", "/page/{pageNo}", "/pageNo", "/page/{pageNo2}").permitAll()
                 .antMatchers("/seeideas", "/seeideas/idea/{ideaId}", "/seeusers", "/file", "/files/{filename:.+}").permitAll()
                 .antMatchers("/delete/{ideaId}", "/edit/{ideaId}", "/editt/{globalUserId}", "/comment/{ideaId}").permitAll()
@@ -77,14 +78,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
                 .antMatchers("/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-                .and()
+                .and().csrf().disable()
+              //  .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .successHandler(successHandler)
                 .and().logout().permitAll()
                 .and()
                 .exceptionHandling()
+             
                 .accessDeniedPage("/403");
+               
 
         // CORS configuration
 

@@ -128,18 +128,19 @@ public class IdeaService implements Ideas {
 	}
 
 	
-	public void save(Idea idea, Authentication authentication) {
-		 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		User user = userRepository.getUserByUsername(userDetails.getUsername());
-		idea.setUser_id(user.getId());
-		ideaRepository.save(idea);
+	public Idea save(Idea idea) {
+		//  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		// User user = userRepository.getUserByUsername(userDetails.getUsername());
+		// idea.setUser_id(user.getId());
+	//	ideaRepository.save(idea);
+		return ideaRepository.save(idea);
 	}
 
-	public void saveOrUpdate(Idea idea, Authentication authentication, Model model) {
+	public void saveOrUpdate(Idea idea,  Model model) {
 	//	List<Category> category = (List<Category>) categoryService.findAll();
-		 UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			User user = userRepository.getUserByUsername(userDetails.getUsername());
-			idea.setUser_id(user.getId());
+		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		//	User user = userRepository.getUserByUsername(userDetails.getUsername());
+		//	idea.setUser_id(user.getId());
 //			Iterable<Category> category =  categoryService.findAll();
 //			idea.setCategory_id (((Category) category).getCategory_id());
 		ideaRepository.save(idea);
@@ -153,15 +154,15 @@ public class IdeaService implements Ideas {
 
 	}
 	
-	public List<Idea> getIdeasByUser(Integer user_id){
+	// public List<Idea> getIdeasByUser(Integer user_id){
 	
-	       List<Idea> ideas = new ArrayList<>();
+	//        List<Idea> ideas = new ArrayList<>();
 	
-	       ideaRepository.findIdeaByUserId(user_id)
-	        .forEach(ideas ::add);
+	//        ideaRepository.findIdeaByUserId(user_id)
+	//         .forEach(ideas ::add);
 	       
-	       return ideas;
-	}
+	//        return ideas;
+	// }
 
     public List<Idea> findAll() {
         return null;

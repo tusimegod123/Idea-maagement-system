@@ -16,7 +16,7 @@ public interface IdeaRepository extends PagingAndSortingRepository<Idea, String>
 	@Query("SELECT i FROM Idea i WHERE CONCAT(i.ideaTitle,'',i.ideaDescription)  LIKE %?1%")
 	public List<Idea> search(String keyword);
 	
-   public List<Idea> findIdeaByUserId(Integer user_id);
+  // public List<Idea> findIdeaByUserId(Integer user_id);
 //
 //	    List<Idea> findAllByOrderByIdDesc();
 // @Query("SELECT u FROM Idea u WHERE u.ideaId = :ideaId")

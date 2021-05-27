@@ -9,7 +9,7 @@ module.exports = {
   },
  // https://cli.vuejs.org/config/#devserver-proxy
  devServer: {
-  port: 3000,
+  port: 3001,
   proxy: {
       '/api': {
           target: 'http://localhost:4000',

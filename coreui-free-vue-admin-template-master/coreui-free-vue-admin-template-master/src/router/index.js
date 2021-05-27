@@ -13,7 +13,7 @@ const Typography = () => import('@/views/theme/Typography')
 const Charts = () => import('@/views/charts/Charts')
 const Widgets = () => import('@/views/widgets/Widgets')
 
-// Views - Components
+// Views - Components/Base
 const Cards = () => import('@/views/base/Cards')
 const Forms = () => import('@/views/base/Forms')
 const Switches = () => import('@/views/base/Switches')
@@ -30,6 +30,8 @@ const Paginations = () => import('@/views/base/Paginations')
 const Popovers = () => import('@/views/base/Popovers')
 const ProgressBars = () => import('@/views/base/ProgressBars')
 const Tooltips = () => import('@/views/base/Tooltips')
+
+const Ideas = () => import ('@/views/base/Ideas')
 
 // Views - Buttons
 const StandardButtons = () => import('@/views/buttons/StandardButtons')
@@ -54,6 +56,7 @@ const Login = () => import('@/views/pages/Login')
 const Register = () => import('@/views/pages/Register')
 
 const Home = () => import('@/views/pages/Home')
+const Idea = () => import ('@/views/pages/Idea')
 
 
 // Users
@@ -146,6 +149,11 @@ function configRoutes () {
             render (c) { return c('router-view') }
           },
           children: [
+            {
+              path: 'ideas',
+              name: 'IdeaView',
+              component: Ideas
+            },
             {
               path: 'cards',
               name: 'Cards',
@@ -325,9 +333,14 @@ function configRoutes () {
         },
         // Custome Page created to talk to the backend
         {
-          path: 'view',
+          path: 'ideas',
           name: 'HomeView',
           component: Home
+        },
+        {
+          path: 'createidea',
+          name: 'Idea',
+          component: Idea
         },
         {
           path: '500',

@@ -39,6 +39,10 @@ export default [
         icon: 'cil-puzzle',
         items: [
           {
+            name: 'Ideas',
+            to: '/base/ideas'
+          },
+          {
             name: 'Breadcrumbs',
             to: '/base/breadcrumbs'
           },
@@ -210,6 +214,10 @@ export default [
           {
             name: 'Register',
             to: '/pages/register'
+          },
+          {
+            name: 'Ideas',
+            to: '/pages/ideas'
           },
           {
             name: 'Error 404',

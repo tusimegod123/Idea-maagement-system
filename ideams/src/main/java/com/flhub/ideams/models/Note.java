@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "notes")
 public class Note {
@@ -24,7 +26,8 @@ public class Note {
 
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
    // @JoinColumn(name = "ideaId", insertable = false, updatable = false)
    // private Idea idea;
     @JoinColumn(name="ideaId" , insertable = false, updatable = false)
@@ -55,8 +58,6 @@ public class Note {
     public void setIdea(Idea idea) {
         this.idea = idea;
     }
-
- 
 
     public String getIdeaId() {
         return ideaId;

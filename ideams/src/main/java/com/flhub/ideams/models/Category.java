@@ -2,15 +2,19 @@ package com.flhub.ideams.models;
 
 import java.util.Set;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,8 +32,8 @@ public class Category extends Auditable<String> {
 	
 	private String category_name;
 	
-
-	@OneToMany(mappedBy = "category")
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER,mappedBy = "category")
 	
 	private Set<Idea> ideas;
 	

@@ -8,10 +8,16 @@ import javax.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
  
 @Entity
 @DynamicUpdate

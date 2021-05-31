@@ -1,8 +1,6 @@
 package com.flhub.ideams.controllers;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 
 import com.flhub.ideams.Exceptions.RecordNotFoundException;
 import com.flhub.ideams.Repository.IdeaRepository;
@@ -10,21 +8,20 @@ import com.flhub.ideams.Repository.UserRepository;
 import com.flhub.ideams.Services.CategoryService;
 import com.flhub.ideams.Services.IdeaService;
 import com.flhub.ideams.Services.NoteService;
-import com.flhub.ideams.models.Category;
+
 import com.flhub.ideams.models.Idea;
 import com.flhub.ideams.models.Note;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 //import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,7 @@ import com.flhub.ideams.models.Country;
 import com.flhub.ideams.models.Gender;
 import com.flhub.ideams.models.Role;
 import com.flhub.ideams.models.User;
+import com.flhub.ideams.util.JwtUtil;
 
 
 // @Controller
@@ -127,7 +130,27 @@ public class UserController {
 //	}
     
     
-    
+@Autowired
+private JwtUtil jwtUtil;
+@Autowired
+private AuthenticationManager authenticationManager;
+
+@GetMapping("/")
+public String welcome() {
+    return "Welcome to javatechie !!";
+}
+
+@PostMapping("/authenticate")
+public String generateToken(@RequestBody User user) throws Exception {
+    try {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
+    } catch (Exception ex) {
+        throw new Exception("inavalid username/password");
+    }
+    return jwtUtil.generateToken(user.getUsername());
+}
     
     
     

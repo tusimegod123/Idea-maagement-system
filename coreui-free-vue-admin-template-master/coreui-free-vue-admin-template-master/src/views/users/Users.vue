@@ -114,7 +114,11 @@ export default {
     }
   },
    mounted() {
-    Vue.axios.get("http://localhost:4000/api/users")
+    Vue.axios.get("http://localhost:4000/api/users",{
+      headers: {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JpcyIsImV4cCI6MTYyMjIzMTI1NSwiaWF0IjoxNjIyMTk1MjU1fQ.ud8Oy3YYZyPhjM44yqBMEnlQAEROHEhHhebq1C9yTPo"
+      }
+    })
     .then((response) => {
      this.fetchUsers(response.data) 
       console.warn(this.items);

@@ -11,12 +11,16 @@
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
                     placeholder="Username"
+                    name="username"
+                    v-model="users.username"
                     autocomplete="username email"
                   >
                     <template #prepend-content><CIcon name="cil-user"/></template>
                   </CInput>
                   <CInput
                     placeholder="Password"
+                    name="password"
+                    v-model="users.username"
                     type="password"
                     autocomplete="curent-password"
                   >

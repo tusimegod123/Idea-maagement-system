@@ -1,11 +1,11 @@
 package com.flhub.ideams.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
+
 
 import com.flhub.ideams.models.Idea;
 
@@ -15,6 +15,9 @@ public interface IdeaRepository extends PagingAndSortingRepository<Idea, String>
 	List<Idea> findAll();
 	@Query("SELECT i FROM Idea i WHERE CONCAT(i.ideaTitle,'',i.ideaDescription)  LIKE %?1%")
 	public List<Idea> search(String keyword);
+
+    Idea getOne(String ideaId);
+  
 	
   // public List<Idea> findIdeaByUserId(Integer user_id);
 //

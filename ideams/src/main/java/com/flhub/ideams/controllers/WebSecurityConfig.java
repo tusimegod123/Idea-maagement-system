@@ -3,12 +3,17 @@ package com.flhub.ideams.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.*;
-
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,7 +22,9 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-//import com.flhub.ideams.Services.UserDetailsServiceImpl;
+import com.flhub.ideams.filter.JwtFilter;
+
+import com.flhub.ideams.Services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -26,10 +33,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     CustomLoginSuccessHandler successHandler;
 
-    // @Bean
-    // public UserDetailsService userDetailsService() {
-    //     return new UserDetailsServiceImpl();
-    // }
+    @Autowired
+    private JwtFilter jwtFilter;
+
+    // @Autowired
+    // UserDetailsServiceImpl userDetailsService;
+
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public UserDetailsServiceImpl userDetailsService() {
+    return new UserDetailsServiceImpl();
+    }
 
     // @Bean
     // public BCryptPasswordEncoder passwordEncoder() {
@@ -39,6 +58,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder getPasswordEncoder() {
         return NoOpPasswordEncoder.getInstance();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService());
     }
 
     // @Bean
@@ -62,32 +86,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        // http.authorizeRequests()
-        http.authorizeRequests().antMatchers("/**").permitAll()
-                .antMatchers("/api/ideas**","/api/users**","/register", "/save", "/login", "/welcome", "/", "/addnote", "/notes").permitAll()
-                .antMatchers("/users", "/search", "searchresult").permitAll()
-                .antMatchers("/", "/resources/**", "/css/**", "/fonts**", "/img/**", "/js/**", "/assets/**").permitAll()
-                .antMatchers("/home", "/addgender", "/gender", "/genders", "/addcountry", "/addrole", "/welcome","/userss").permitAll()
-                .antMatchers("/register", "/userhome").permitAll()
-                .antMatchers("/user/{globalUserId}", "/createuser**","/api/ideas/submit").permitAll()
-                .antMatchers("/idea", "/createIdea**", "/page/{pageNo}", "/pageNo", "/page/{pageNo2}").permitAll()
-                .antMatchers("/seeideas", "/seeideas/idea/{ideaId}", "/seeusers", "/file", "/files/{filename:.+}").permitAll()
-                .antMatchers("/delete/{ideaId}", "/edit/{ideaId}", "/editt/{globalUserId}", "/comment/{ideaId}").permitAll()
-                .antMatchers("/admin").hasAnyAuthority("ADMIN")
-                .antMatchers("/user", "/createIdea**", "/idea", "/ideas").hasAnyAuthority("USER")
-                .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
-                .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-                .antMatchers("/delete/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
-                .and().csrf().disable()
-              //  .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .successHandler(successHandler)
-                .and().logout().permitAll()
+        http.cors().and().csrf().disable().authorizeRequests().antMatchers("/api/authenticate").permitAll()
+        .anyRequest().authenticated()
+         
+                // .antMatchers("/api/ideas**","/api/users**","/register", "/save", "/login", "/welcome", "/", "/addnote", "/notes").permitAll()
+                // .antMatchers("/users", "/search", "searchresult").permitAll()
+                // .antMatchers("/", "/resources/**", "/css/**", "/fonts**", "/img/**", "/js/**", "/assets/**").permitAll()
+                // .antMatchers("/home", "/addgender", "/gender", "/genders", "/addcountry", "/addrole", "/welcome","/userss").permitAll()
+                // .antMatchers("/register", "/userhome").permitAll()
+                // .antMatchers("/user/{globalUserId}", "/createuser**","/api/ideas/submit").permitAll()
+                // .antMatchers("/idea", "/createIdea**", "/page/{pageNo}", "/pageNo", "/page/{pageNo2}").permitAll()
+                // .antMatchers("/seeideas", "/seeideas/idea/{ideaId}", "/seeusers", "/file", "/files/{filename:.+}").permitAll()
+                // .antMatchers("/delete/{ideaId}", "/edit/{ideaId}", "/editt/{globalUserId}", "/comment/{ideaId}").permitAll()
+                // .antMatchers("/admin").hasAnyAuthority("ADMIN")
+                // .antMatchers("/user", "/createIdea**", "/idea", "/ideas").hasAnyAuthority("USER")
+                // .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
+                // .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
+            //     .antMatchers("/delete/**").hasAuthority("ADMIN")
+            //     .anyRequest().authenticated()
+                
+            //   //  .and()
+            //     .formLogin()
+            //     .loginPage("/login").permitAll()
+            //     .successHandler(successHandler)
+            //     .and().logout().permitAll()
                 .and()
                 .exceptionHandling()
-             
-                .accessDeniedPage("/403");
+                .accessDeniedPage("/403")
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
                
 
         // CORS configuration

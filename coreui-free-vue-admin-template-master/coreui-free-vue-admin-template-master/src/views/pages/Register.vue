@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center min-vh-100">
     <CContainer fluid>
       <CRow class="justify-content-center">
-        <CCol md="6">
+        <CCol md="12">
           <CCard class="mx-4 mb-0">
             <CCardBody class="p-4">
               <form @submit="postData" method="post">
@@ -41,16 +41,9 @@
                   
                 /> -->
                 <label>Country:</label>
-                <select id="select-option" name="country" v-model="users.country" >
-                
+                <select id="select-option" name="country" v-model="users.country">
                  <option id="select-option"  name="country" v-bind:key="item.id" :value="item.countryId" v-for="item in items">{{ item.countryName }}</option>
                 </select><br><br>
-                <!-- <c-select
-                  label="time"
-                  :options="options"
-                  :value.sync="selectedValue"
-                  placeholder="placeholder"
-                /> -->
                
                 <CInput
                   placeholder="Username"
@@ -61,7 +54,7 @@
                     ><CIcon name="cil-user"
                   /></template>
                 </CInput>
-                <CInput placeholder="Email" autocomplete="email" prepend="@" />
+                <CInput placeholder="Email" name="primaryEmail" v-model="users.primaryEmail" autocomplete="email" prepend="@" />
                 <CInput
                   placeholder="Password"
                   name="password"
@@ -127,6 +120,7 @@ export default {
         firstName: null,
         lastname: null,
         username: null,
+        primaryEmail:null,
         password: null,
         roles: null,
         country:null
@@ -158,9 +152,12 @@ export default {
     postData(e) {
       this.axios
         .post("http://localhost:4000/api/users", this.users)
-        .then((response) => {
-          console.warn(response);
-        });
+        // .then((response) => {
+        //   console.warn(response);
+        // })
+        .then(()=>{
+          this.$router.push("/pages/login")
+        })
       //    console.warn(this.posts);
       e.preventDefault();
     },
@@ -174,7 +171,11 @@ export default {
     },
   },
   mounted() {
-    Vue.axios.get("http://localhost:4000/api/country").then((response) => {
+    Vue.axios.get("http://localhost:4000/api/country",{
+       headers: {
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtb3JpcyIsImV4cCI6MTYyMjIzMTI1NSwiaWF0IjoxNjIyMTk1MjU1fQ.ud8Oy3YYZyPhjM44yqBMEnlQAEROHEhHhebq1C9yTPo"
+       }
+    }).then((response) => {
       this.fetchCountries(response.data);
       console.warn(this.items);
     });

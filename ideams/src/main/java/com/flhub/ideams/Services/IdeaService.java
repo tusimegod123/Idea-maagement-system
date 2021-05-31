@@ -1,20 +1,16 @@
 package com.flhub.ideams.Services;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 
 import com.flhub.ideams.Exceptions.RecordNotFoundException;
@@ -24,20 +20,20 @@ import com.flhub.ideams.Repository.UserRepository;
 
 import com.flhub.ideams.models.Idea;
 
-import com.flhub.ideams.models.User;
+
 
 @Service
 public class IdeaService implements Ideas {
 
 	@Autowired
 	IdeaRepository ideaRepository;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	CategoryRepository categoryRepository;
-	
+
 	@Autowired
 	CategoryService categoryService;
 
@@ -85,7 +81,7 @@ public class IdeaService implements Ideas {
 	}
 
 	public Idea getEmployeeById(String idea_id) throws RecordNotFoundException {
-	//	System.out.println("getEmployeeById");
+		// System.out.println("getEmployeeById");
 		Optional<Idea> idea = ideaRepository.findById(idea_id);
 
 		if (idea.isPresent()) {
@@ -109,8 +105,8 @@ public class IdeaService implements Ideas {
 			if (idea.isPresent()) {
 				Idea newEntity = idea.get();
 				newEntity.setIdeaTitle(entity.getIdeaTitle());
-//				newEntity.setFirstName(entity.getFirstName());
-//				newEntity.setLastName(entity.getLastName());
+				// newEntity.setFirstName(entity.getFirstName());
+				// newEntity.setLastName(entity.getLastName());
 
 				newEntity = ideaRepository.save(newEntity);
 
@@ -127,24 +123,18 @@ public class IdeaService implements Ideas {
 		return ideaRepository.search(keyword);
 	}
 
-	
 	public Idea save(Idea idea) {
-		//  UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 		// User user = userRepository.getUserByUsername(userDetails.getUsername());
 		// idea.setUser_id(user.getId());
-	//	ideaRepository.save(idea);
+		// ideaRepository.save(idea);
 		return ideaRepository.save(idea);
 	}
 
-	public void saveOrUpdate(Idea idea,  Model model) {
-	//	List<Category> category = (List<Category>) categoryService.findAll();
-		// UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-		//	User user = userRepository.getUserByUsername(userDetails.getUsername());
-		//	idea.setUser_id(user.getId());
-//			Iterable<Category> category =  categoryService.findAll();
-//			idea.setCategory_id (((Category) category).getCategory_id());
-		ideaRepository.save(idea);
-	}
+	// public Idea saveOrUpdate(Idea idea, String ideaId) {
+	// 	Idea currentIdea = ideaRepository.getIdeaById(ideaId);
+	// 	return ideaRepository.save(currentIdea);
+	// }
 
 	@Override
 	public Page<Idea> findPaginated(int pageNo, int pageSize) {
@@ -153,18 +143,26 @@ public class IdeaService implements Ideas {
 		return this.ideaRepository.findAll(pageable);
 
 	}
-	
+
 	// public List<Idea> getIdeasByUser(Integer user_id){
-	
-	//        List<Idea> ideas = new ArrayList<>();
-	
-	//        ideaRepository.findIdeaByUserId(user_id)
-	//         .forEach(ideas ::add);
-	       
-	//        return ideas;
+
+	// List<Idea> ideas = new ArrayList<>();
+
+	// ideaRepository.findIdeaByUserId(user_id)
+	// .forEach(ideas ::add);
+
+	// return ideas;
 	// }
 
-    public List<Idea> findAll() {
-        return null;
-    }
+	public List<Idea> findAll() {
+		return null;
+	}
+
+	public Idea saveOrUpdate(Idea idea, String ideaId) {
+	//	Idea currentIdea = ideaRepository.findById(ideaId).get();
+
+
+		return ideaRepository.save(idea);
+	}
+
 }
